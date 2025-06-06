@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Registra un Jefe de Carrera en RASSPP">
+  <title>RASSPP - Registro de Jefe de Carrera</title>
+  <link rel="stylesheet" href="../CSS/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">RASSPP</div>
+    <div class="nav">
+      <a href="../index.html" data-translate="login">INICIAR SESIÓN</a>
+      <a href="#" onclick="toggleLanguage()" data-translate="language">IDIOMA</a>
+      <a href="#" onclick="scrollToFooter()" data-translate="help">AYUDA</a>
+      <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+
+  <section class="login-section">
+    <div class="background-overlay"></div>
+
+    <div class="login-box">
+      <h1 data-translate="program_head_register">Registro de Jefe de Carrera</h1>
+      <div class="email-container">
+        <input type="text" id="register-email-username" placeholder="Matrícula" data-translate-placeholder="matricula">
+        <span>@ulsaneza.edu.mx</span>
+      </div>
+      <input type="password" id="register-password" placeholder="Contraseña" data-translate-placeholder="password">
+      <input type="text" id="register-fullname" placeholder="Nombre Completo" data-translate-placeholder="full_name">
+      <div class="dropdown">
+        <button type="button" class="dropdown-toggle" data-translate="select_careers">Seleccionar Carreras</button>
+        <div class="dropdown-content">
+          <label><input type="checkbox" name="carreras" value="Ingeniería en Sistemas"> Ingeniería en Sistemas</label>
+          <label><input type="checkbox" name="carreras" value="Derecho"> Derecho</label>
+          <label><input type="checkbox" name="carreras" value="Administración"> Administración</label>
+        </div>
+      </div>
+      <button onclick="registerJefe()" data-translate="create_user">Crear Usuario</button>
+      <button class="back-button" onclick="history.back()" data-translate="back">Regresar</button>
+      <div id="register-message" class="message"></div>
+    </div>
+
+
+  </section>
+
+  <div class="footer" id="footer">
+    <p>© 2025, RASSPP</p>
+    <div class="social-icons">
+      <a href="https://www.facebook.com/share/16bxHVvHyK/?mibextid=wwXIfr" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+      <a href="https://www.instagram.com/rasspp_ulsa?igsh=M3FuMHVkYzgxYTl0" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+
+  <script src="../JS/firebase-config.js"></script>
+  <script src="../JS/auth.js"></script>
+  <script src="../JS/animations.js"></script>
+  <script src="../JS/blockRightClick.js"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gestión de Carrera">
+  <title>RASSPP - Gestión de Carrera</title>
+  <link rel="stylesheet" href="../CSS/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">RASSPP</div>
+    <div class="nav">
+      <a href="#" onclick="toggleLanguage()" data-translate="language">Idioma</a>
+      <a href="#" onclick="scrollToFooter()" data-translate="help">Ayuda</a>
+      <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+
+  <div class="main-container">
+    <aside class="sidebar">
+      <div class="user-section">
+        <div class="user-icon" onclick="toggleLogout()">
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="logout-section" id="logout-section" style="display: none;">
+          <button onclick="logout()" data-translate="logout">Cerrar Sesión</button>
+        </div>
+      </div>
+      <div class="filter-section">
+        <h3 data-translate="filters">Filtros</h3>
+        <label><input type="checkbox" name="generacion"> Generación</label>
+        <label><input type="checkbox" name="carrera"> Carrera</label>
+        <label><input type="checkbox" name="semestre"> Semestre</label>
+        <label><input type="checkbox" name="grupo"> Grupo</label>
+      </div>
+    </aside>
+    <main class="content">
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Buscar alumno..." data-translate-placeholder="search_student">
+        <button onclick="filterStudents()" data-translate="search">Buscar</button>
+      </div>
+      <div id="student-list" class="student-list">
+        <!-- Alumnos se cargarán dinámicamente -->
+      </div>
+    </main>
+  </div>
+
+  <div class="footer" id="footer">
+    <p>© 2025, RASSPP</p>
+    <div class="social-icons">
+      <a href="https://www.facebook.com/share/16bxHVvHyK/?mibextid=wwXIfr" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+      <a href="https://www.instagram.com/rasspp_ulsa?igsh=M3FuMHVkYzgxYTl0" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+
+  <script src="../JS/animations.js"></script>
+  <script src="../JS/gestion_carrera.js"></script>
+  <script src="../JS/blockRightClick.js"></script>
+  <script>
+    // Toggle menu for mobile
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.querySelector('.nav').classList.toggle('active');
+    });
+
+    // Firebase auth state check
+    firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = 'login_jefe.html';
+      } else {
+        document.body.classList.add('logged-in');
+        // Código existente para cargar estudiantes
+      }
+    });
+
+    function toggleLogout() {
+      const logoutSection = document.getElementById('logout-section');
+      logoutSection.style.display = logoutSection.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function logout() {
+      firebase.auth().signOut().then(() => {
+        window.location.href = 'login_jefe.html';
+      });
+    }
+
+    function scrollToFooter() {
+      document.getElementById('footer').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function toggleLanguage() {
+      console.log('Toggle language clicked');
+    }
+
+    function filterStudents() {
+      const searchTerm = document.getElementById('search-input').value.toLowerCase();
+      const students = document.querySelectorAll('.student-card');
+      
+      students.forEach(student => {
+        const studentText = student.textContent.toLowerCase();
+        if (studentText.includes(searchTerm)) {
+          student.style.display = 'block';
+        } else {
+          student.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
