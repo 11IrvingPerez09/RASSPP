@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Plataforma para Servicio Social y Prácticas Profesionales">
+  <title>RASSPP - Servicio Social y Prácticas Profesionales</title>
+  <link rel="stylesheet" href="CSS/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="header">
+    <div class="logo">LA SALLE NEZAHUALCÓYOTL</div>
+    <div class="nav">
+      <a href="index.html" data-translate="login">Iniciar Sesión</a>
+      <a href="#" onclick="toggleLanguage()" data-translate="language">Idioma</a>
+      <a href="#" onclick="scrollToFooter()" data-translate="help">Ayuda</a>
+    </div>
+    <button class="menu-toggle" aria-label="Abrir menú de navegación">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <section class="hero-section">
+    <div class="background-overlay"></div>
+
+    <div class="welcome-box">
+      <h1 data-translate="welcome">Bienvenido</h1>
+      <p data-translate="social_service">Servicio Social y Prácticas Profesionales</p>
+      <div class="button-group">
+        <button onclick="window.location.href='HTML/login_admin.html'" data-translate="admin">Administrador</button>
+        <button onclick="window.location.href='HTML/login_jefe.html'" data-translate="program_head">Jefe de programa</button>
+      </div>
+      <button class="back-button" style="display: none;" data-translate="back">Regresar</button>
+    </div>
+
+
+  </section>
+
+  <section class="info-section">
+    <table class="info-table">
+      <tr>
+        <th data-translate="professional_practices">Prácticas Profesionales</th>
+        <th data-translate="social_service">Servicio Social</th>
+      </tr>
+      <tr>
+        <td data-translate="public_private">Institución pública o privada</td>
+        <td data-translate="public_civil">Se realizan en instituciones públicas o Asociaciones Civiles</td>
+      </tr>
+      <tr>
+        <td data-translate="400_hours">Son un total de 400 Horas</td>
+        <td data-translate="480_hours">Se realizan en un tiempo de 480 horas o 6 meses</td>
+      </tr>
+      <tr>
+        <td data-translate="5th_semester">Haber concluido hasta 5 semestre los créditos de impacto social</td>
+        <td data-translate="7th_semester">Créditos y Prácticas Profesionales haberlas concluido hasta séptimo semestre</td>
+      </tr>
+    </table>
+  </section>
+
+  <div class="footer" id="footer">
+    <p>© 2025, RASSPP</p>
+    <div class="social-icons">
+      <a href="https://www.facebook.com/share/16bxHVvHyK/?mibextid=wwXIfr" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+      <a href="https://www.instagram.com/rasspp_ulsa?igsh=M3FuMHVkYzgxYTl0" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+
+  <script src="JS/animations.js"></script>
+  <script src="JS/responsive-menu.js"></script>
+  <script src="JS/blockRightClick.js"></script>
+</body>
+</html>
