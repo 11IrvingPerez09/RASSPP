@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Servicio Social - Jefe de Carrera - RASSPP" />
+  <title>RASSPP - Servicio Social Jefe de Carrera</title>
+  <link rel="stylesheet" href="../CSS/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+</head>
+<body>
+  <div class="header fixed-header">
+    <div class="logo">RASSPP</div>
+    <div class="nav">
+      <button class="nav-button" onclick="window.location.href='menu_principal_jefe.html'"><i class="fas fa-arrow-left"></i> Regresar</button>
+      <button class="nav-button" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+      <a href="#" onclick="toggleLanguage()" data-translate="language">IDIOMA</a>
+      <a href="#" onclick="scrollToFooter()" data-translate="help">AYUDA</a>
+      <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+
+  <div class="servicio-social-container">
+    <button class="filters-toggle" aria-label="Mostrar/Ocultar filtros">
+      <i class="fas fa-filter"></i> Filtros
+    </button>
+    <div class="overlay"></div>
+    <div class="filters-sidebar">
+      <h3>Filtros</h3>
+      
+      <div class="filter-group">
+        <label for="filter-carrera">Carrera</label>
+        <select id="filter-carrera">
+          <option value="">Todas las carreras</option>
+          <option value="Ingenieria">Ingeniería</option>
+          <option value="Administracion">Administración</option>
+          <option value="Derecho">Derecho</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="filter-generacion">Generación</label>
+        <input type="text" id="filter-generacion" placeholder="Ej: 2023-2025" />
+      </div>
+      
+      <div class="filter-group">
+        <label for="filter-grupo">Grupo</label>
+        <input type="text" id="filter-grupo" placeholder="Ej: A, B, C" />
+      </div>
+      
+      <div class="filter-group">
+        <label for="filter-sexo">Sexo</label>
+        <select id="filter-sexo">
+          <option value="">Todos</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Femenino">Femenino</option>
+          <option value="Otro">Otro</option>
+        </select>
+      </div>
+      
+      <button class="apply-filters" id="apply-filters">Aplicar Filtros</button>
+      <button class="apply-filters" id="clear-filters" style="background: #555; margin-top: 10px;">Limpiar Filtros</button>
+    </div>
+    
+    <div class="content">
+      <h1>Servicio Social - Jefe de Carrera</h1>
+      
+      <div class="search-container">
+        <input type="text" id="search-input" class="search-input" placeholder="Buscar por nombre o matrícula..." />
+        <button class="search-button" id="search-button">Buscar</button>
+      </div>
+      
+      <div class="student-list-container">
+        <div id="alumnos-cards" class="student-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../JS/firebase-config.js"></script>
+  <script src="../JS/auth.js"></script>
+  <script src="../JS/servicio_social_jefe_carrera.js"></script>
+  <script src="../JS/responsive-filters.js"></script>
+  <script src="../JS/filters-handler.js"></script>
+  <script src="../JS/blockRightClick.js"></script>
+</body>
+</html>

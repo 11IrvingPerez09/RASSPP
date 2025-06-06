@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Menú principal para Jefes de Carrera en RASSPP">
+  <title>RASSPP - Menú Principal Jefe de Carrera</title>
+  <link rel="stylesheet" href="../CSS/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+</head>
+<body class="logged-in">
+  <div class="header">
+    <div class="logo">RASSPP</div>
+<div class="nav">
+  <a href="#" onclick="logout()" data-translate="logout">CERRAR SESIÓN</a>
+  <a href="#" onclick="toggleLanguage()" data-translate="language">IDIOMA</a>
+  <a href="#" onclick="scrollToFooter()" data-translate="help">AYUDA</a>
+  <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+</div>
+  </div>
+
+  <div class="main-container">
+    <div class="section practicas">
+      <div class="overlay">
+        <h1 data-translate="professional_practices">PRÁCTICAS PROFESIONALES</h1>
+        <p data-translate="professional_practices_description">Gestión de alumnos en prácticas profesionales</p>
+        <button onclick="window.location.href='practicas_profesionales_jefe.html'" data-translate="access">ACCEDER</button>
+
+
+
+      </div>
+    </div>
+    
+    <div class="section servicio">
+      <div class="overlay">
+        <h1 data-translate="social_service">SERVICIO SOCIAL</h1>
+        <p data-translate="social_service_description">Gestión de alumnos en servicio social</p>
+        <button onclick="window.location.href='servicio_social_jefe_carrera.html'" data-translate="access">ACCEDER</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="simple-footer">
+    <p>© 2025, RASSPP</p>
+  </div>
+
+  <script src="../JS/firebase-config.js"></script>
+  <script src="../JS/auth.js"></script>
+  <script src="../JS/animations.js"></script>
+  <script src="../JS/blockRightClick.js"></script>
+</body>
+</html>
