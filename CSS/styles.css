@@ -1699,11 +1699,11 @@ body.formulario-alumno {
 }
 
 .section.practicas {
-  background: url('../images/practicas_profesionales.jpg') no-repeat center center/cover;
+  background: url('../Images/practicas_profesionales.jpg') no-repeat center center/cover;
 }
 
 .section.servicio {
-  background: url('../images/servicio_social.jpg') no-repeat center center/cover;
+  background: url('../Images/servicio_social.jpg') no-repeat center center/cover;
 }
 
 .section .overlay {
