@@ -1686,7 +1686,6 @@ body.formulario-alumno {
   color: #D81E05;
   transform: scale(1.2);
 }
-
 /* Menu Principal Sections */
 .section {
   flex: 1;
@@ -1699,18 +1698,12 @@ body.formulario-alumno {
 }
 
 .section.practicas {
-  background: url('../Images/practicas_profesionales.jpg') no-repeat center center/cover;
+  background: url('/RASSPP/Images/practicas_profesionales.jpg') no-repeat center center/cover;
 }
 
 .section.servicio {
-  background: url('../Images/servicio_social.jpg') no-repeat center center/cover;
+  background: url('/RASSPP/Images/servicio_social.jpg') no-repeat center center/cover;
 }
-
-
-
-
-
-
 
 .section .overlay {
   position: absolute;
@@ -1732,6 +1725,20 @@ body.formulario-alumno {
   background: rgba(0, 0, 0, 0.2);
 }
 
+.section .overlay h1 {
+  color: #FFFFFF !important;
+  font-size: 2rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1rem;
+}
+
+.section .overlay p {
+  color: #FFFFFF;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
 .section .overlay button {
   width: 150px;
   padding: 10px;
@@ -1748,6 +1755,7 @@ body.formulario-alumno {
 .section .overlay button:hover {
   background: #3BAFDA;
 }
+
 
 /* Rotating Circle */
 .rotating-circle {
