@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modificar Institución - Servicio Social</title>
+  <link rel="stylesheet" href="../CSS/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-firestore.js"></script>
+</head>
+<body>
+  <div class="header fixed-header">
+    <div class="logo">RASSPP</div>
+    <div class="nav">
+      <button class="nav-button" onclick="window.location.href='servicio_social.html'"><i class="fas fa-arrow-left"></i> Regresar</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>Modificar Institución - Servicio Social</h1>
+    <div id="student-info">
+      <!-- Student information will be displayed here -->
+    </div>
+    <div id="institution-selection">
+      <div id="institution-list">
+        <!-- List of public institutions will be displayed here -->
+      </div>
+      <button id="select-institution-button">Seleccionar Institución</button>
+      <button id="add-institution-button">Agregar Nueva Institución</button>
+      <button id="assign-institution-button" style="display: none;">Asignar Institución Seleccionada</button>
+    </div>
+    <div id="new-institution-form" style="display: none;">
+      <h2>Nueva Institución Pública</h2>
+      <label for="institution-name">Nombre de la Institución:</label>
+      <input type="text" id="institution-name">
+      <label for="institution-rfc">RFC:</label>
+      <input type="text" id="institution-rfc">
+      <label for="institution-contact">Número de Contacto:</label>
+      <input type="text" id="institution-contact">
+      <label for="institution-person">Nombre de la Persona a Cargo:</label>
+      <input type="text" id="institution-person">
+      <label for="institution-address">Dirección:</label>
+      <input type="text" id="institution-address">
+      <button id="save-institution-button">Guardar Institución</button>
+    </div>
+  </div>
+
+  <script src="../JS/animations.js"></script>
+  <script src="../JS/firebase-config.js"></script>
+  <script src="../JS/auth.js"></script>
+  <script src="../JS/modificar_institucion_servicio.js"></script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Prácticas Profesionales - RASSPP">
+  <title>RASSPP - Prácticas Profesionales</title>
+  <link rel="stylesheet" href="../CSS/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-firestore.js"></script>
+</head>
+<body>
+  <div class="header fixed-header">
+    <div class="logo">RASSPP</div>
+    <button class="menu-toggle" aria-label="Abrir menú de navegación">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="nav">
+      <div class="user-profile">
+        <div class="user-avatar">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="user-info">
+          <span class="user-name" id="admin-name">Administrador</span>
+          <span class="user-role">Admin</span>
+        </div>
+      </div>
+      <div class="nav-links">
+        <button class="nav-button" onclick="window.location.href='menu_principal.html'">
+          <i class="fas fa-arrow-left"></i> Regresar
+        </button>
+        <button class="filters-menu-button" id="filters-menu-button">
+          <i class="fas fa-filter"></i> Filtros
+        </button>
+        <button class="close-filters-menu-button" id="close-filters-menu-button" style="display: none;">
+          <i class="fas fa-times"></i> Cerrar Filtro
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="practicas-container">
+    <div class="overlay"></div>
+    <div class="filters-sidebar">
+      <h3><i class="fas fa-filter"></i> Filtros Avanzados</h3>
+      
+      <div class="filter-group">
+        <label for="filter-carrera">
+          <i class="fas fa-graduation-cap"></i> Carrera
+        </label>
+        <select id="filter-carrera">
+          <option value="">🎓 Todas las carreras</option>
+          <!-- Las carreras se cargarán dinámicamente desde Firebase -->
+        </select>
+        <div class="loading-indicator" id="carreras-loading" style="display: none;">
+          <i class="fas fa-spinner fa-spin"></i> Cargando carreras...
+        </div>
+      </div>
+      
+      <div class="filter-group">
+        <label for="filter-semestre">
+          <i class="fas fa-calendar-alt"></i> Semestre
+        </label>
+        <select id="filter-semestre">
+          <option value="">📚 Todos los semestres</option>
+          <option value="4">4to Semestre</option>
+          <option value="5">5to Semestre</option>
+          <option value="6">6to Semestre</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="filter-grupo">
+          <i class="fas fa-users"></i> Grupo
+        </label>
+        <select id="filter-grupo">
+          <option value="">👥 Todos los grupos</option>
+          <option value="A">Grupo A</option>
+          <option value="B">Grupo B</option>
+          <option value="C">Grupo C</option>
+          <option value="D">Grupo D</option>
+          <option value="E">Grupo E</option>
+          <option value="F">Grupo F</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="filter-generacion">
+          <i class="fas fa-clock"></i> Generación
+        </label>
+        <input type="text" id="filter-generacion" placeholder="Ej: 2023, 2024">
+      </div>
+      
+      <div class="filter-group">
+        <label for="filter-sexo">
+          <i class="fas fa-user"></i> Sexo
+        </label>
+        <select id="filter-sexo">
+          <option value="">👤 Todos</option>
+          <option value="Masculino">👨 Masculino</option>
+          <option value="Femenino">👩 Femenino</option>
+          <option value="Otro">⚧ Otro</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="filter-institucion">
+          <i class="fas fa-university"></i> Tipo de Institución
+        </label>
+        <select id="filter-institucion">
+          <option value="">🏛️ Todas las instituciones</option>
+          <option value="public">🏛️ Públicas</option>
+          <option value="private">🏢 Privadas</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="filter-status">
+          <i class="fas fa-tasks"></i> Estado de Documentos
+        </label>
+        <select id="filter-status">
+          <option value="">📋 Todos los estados</option>
+          <option value="0">🔴 Sin documentos (0/6)</option>
+          <option value="partial">🟡 En progreso (1-5/6)</option>
+          <option value="6">🟢 Completo (6/6)</option>
+        </select>
+      </div>
+      
+      <div class="filter-actions">
+        <button class="apply-filters" onclick="applyFilters()">
+          <i class="fas fa-search"></i> Aplicar Filtros
+        </button>
+        <button class="clear-filters" onclick="clearFilters()">
+          <i class="fas fa-eraser"></i> Limpiar Filtros
+        </button>
+      </div>
+
+      <div class="filter-summary" id="filter-summary" style="display: none;">
+        <h4><i class="fas fa-info-circle"></i> Resumen de Filtros</h4>
+        <div id="active-filters"></div>
+        <div id="results-count"></div>
+      </div>
+    </div>
+    
+    <div class="content">
+      <h1>Prácticas Profesionales</h1>
+      
+      <div class="search-container">
+        <input type="text" id="search-input" class="search-input" placeholder="Buscar por nombre o matrícula...">
+        <button class="search-button" onclick="searchStudents()">Buscar</button>
+      </div>
+      
+      <!-- Contador prominente de estudiantes -->
+      <div class="student-counter" id="student-counter" style="display: none;">
+        <div class="counter-content">
+          <i class="fas fa-users"></i>
+          <span class="counter-text" id="counter-text">Mostrando todos los estudiantes</span>
+          <span class="counter-number" id="counter-number">0</span>
+        </div>
+      </div>
+      
+      <div class="student-list-container">
+        <div id="alumnos-cards" class="student-list"></div>
+      </div>
+    </div>
+
+    <!-- Botón flotante para agregar alumno -->
+    <div class="floating-add-button" onclick="window.location.href='alta_alumno_practicas.html'">
+      <i class="fas fa-plus"></i>
+    </div>
+  </div>
+
+  <div class="modal" id="student-modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>Detalles del Estudiante</h2>
+      <div id="student-details"></div>
+      <h3>Documentos de Prácticas</h3>
+      <div class="checkbox-container">
+        <label><input type="checkbox" id="carta-practicas"> Carta de Presentación</label>
+        <label><input type="checkbox" id="carta-aceptacion"> Carta de Aceptación</label>
+        <label><input type="checkbox" id="bitacora"> Bitácora</label>
+        <label><input type="checkbox" id="reporte"> Reporte de Actividades</label>
+        <label><input type="checkbox" id="carta-termino"> Carta de Término</label>
+        <label><input type="checkbox" id="completion"> Carta de Evaluación</label>
+      </div>
+      <p id="modal-message"></p>
+      <button onclick="updatePracticas(document.getElementById('student-details').dataset.matricula)">Actualizar</button>
+    </div>
+  </div>
+
+  <script src="../JS/firebase-config.js"></script>
+  <script src="../JS/animations.js"></script>
+  <script src="../JS/responsive-menu.js"></script>
+  <script src="../JS/responsive-filters.js"></script>
+  <script src="../JS/filters-handler.js"></script>
+  <script src="../JS/auth.js"></script>
+  <script src="../JS/blockRightClick.js"></script>
+  <script src="../JS/practicas_profesionales_jefe.js"></script>
+  <script>
+    function toggleLanguage() {
+      console.log('Toggle language clicked');
+    }
+
+    function scrollToFooter() {
+      document.getElementById('footer').scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

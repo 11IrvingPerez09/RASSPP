@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Menú principal para Jefes de Carrera en RASSPP">
+  <title>RASSPP - Menú Principal Jefe de Carrera</title>
+  <link rel="stylesheet" href="../CSS/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+</head>
+<body class="logged-in">
+  <div class="header">
+    <div class="logo">RASSPP</div>
+    <button class="menu-toggle" aria-label="Abrir menú de navegación">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="nav">
+      <div class="user-profile">
+        <div class="user-avatar">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="user-info">
+          <span class="user-name" id="jefe-name">Jefe de Carrera</span>
+          <span class="user-role">Jefe</span>
+        </div>
+      </div>
+      <div class="welcome-message" id="welcome-message">
+        <h2>Bienvenido, <span id="jefe-welcome-name"></span></h2>
+      </div>
+      <div class="nav-links">
+        <a href="#" onclick="logout()" data-translate="logout">CERRAR SESIÓN</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-container">
+    <div class="section practicas">
+     <div class="overlay" style="background: transparent !important;">
+
+        <h1 data-translate="professional_practices">PRÁCTICAS PROFESIONALES</h1>
+        <p style="color: black">Gestión de alumnos en prácticas profesionales</p>
+        <button onclick="window.location.href='practicas_profesionales_jefe_carrera.html'" data-translate="access">ACCEDER</button>
+
+
+
+      </div>
+    </div>
+    
+    <div class="section servicio">
+     <div class="overlay" style="background: transparent !important;">
+
+        <h1 data-translate="social_service">SERVICIO SOCIAL</h1>
+        <p style="color: black">Gestión de alumnos en servicio social</p>
+        <button onclick="window.location.href='servicio_social_jefe_carrera.html'" data-translate="access">ACCEDER</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="simple-footer">
+    <p>© 2025, RASSPP</p>
+  </div>
+
+  <script src="../JS/firebase-config.js"></script>
+  <script src="../JS/auth.js"></script>
+  <script src="../JS/animations.js"></script>
+  <script src="../JS/blockRightClick.js"></script>
+  
+  <script>
+    // Cargar y mostrar el nombre del jefe de carrera
+    document.addEventListener('DOMContentLoaded', function() {
+      const jefeNameElement = document.getElementById('jefe-name');
+      const jefeWelcomeNameElement = document.getElementById('jefe-welcome-name');
+      
+      // Obtener el nombre del localStorage
+      const jefeFullName = localStorage.getItem('jefeFullName');
+      
+      if (jefeFullName) {
+        // Actualizar el nombre en el perfil del usuario
+        if (jefeNameElement) {
+          jefeNameElement.textContent = jefeFullName;
+        }
+        
+        // Mostrar el mensaje de bienvenida
+        if (jefeWelcomeNameElement) {
+          jefeWelcomeNameElement.textContent = jefeFullName;
+        }
+      } else {
+        // Si no hay nombre en localStorage, intentar obtenerlo de Firebase
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            firebase.database().ref(`jefes_carrera/${user.uid}`).once('value')
+              .then((snapshot) => {
+                if (snapshot.exists()) {
+                  const jefeData = snapshot.val();
+                  const fullName = jefeData.fullname;
+                  
+                  // Guardar en localStorage para futuras visitas
+                  localStorage.setItem('jefeFullName', fullName);
+                  
+                  // Actualizar elementos en la página
+                  if (jefeNameElement) {
+                    jefeNameElement.textContent = fullName;
+                  }
+                  if (jefeWelcomeNameElement) {
+                    jefeWelcomeNameElement.textContent = fullName;
+                  }
+                }
+              })
+              .catch((error) => {
+                console.error('Error al obtener datos del jefe:', error);
+              });
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

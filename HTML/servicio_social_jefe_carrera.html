@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Servicio Social - Jefe de Carrera - RASSPP" />
+  <title>RASSPP - Servicio Social Jefe de Carrera</title>
+  <link rel="stylesheet" href="../CSS/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+</head>
+<body>
+  <div class="header fixed-header">
+    <div class="logo">RASSPP</div>
+    <button class="menu-toggle" aria-label="Abrir menú de navegación">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="nav">
+      <div class="user-profile">
+        <div class="user-avatar">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="user-info">
+          <span class="user-name" id="jefe-name">Jefe de Carrera</span>
+          <span class="user-role">Jefe</span>
+        </div>
+      </div>
+      <div class="nav-links">
+        <button class="nav-button" onclick="window.location.href='menu_principal_jefe.html'">
+          <i class="fas fa-arrow-left"></i> Regresar
+        </button>
+        <button class="filters-menu-button" id="filters-menu-button">
+          <i class="fas fa-filter"></i> Filtros
+        </button>
+
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="servicio-social-container">
+    <div class="overlay"></div>
+    <div class="filters-sidebar">
+      <h3><i class="fas fa-filter"></i> Filtros Avanzados</h3>
+      
+      <div class="filter-group">
+        <label for="filter-carrera">
+          <i class="fas fa-graduation-cap"></i> Carrera
+        </label>
+        <select id="filter-carrera">
+          <option value="">🎓 Todas las carreras</option>
+          <!-- Las carreras se cargarán dinámicamente desde Firebase -->
+        </select>
+        <div class="loading-indicator" id="carreras-loading" style="display: none;">
+          <i class="fas fa-spinner fa-spin"></i> Cargando carreras...
+        </div>
+      </div>
+      
+      <div class="filter-group">
+        <label for="filter-semestre">
+          <i class="fas fa-calendar-alt"></i> Semestre
+        </label>
+        <select id="filter-semestre">
+          <option value="">📚 Todos los semestres</option>
+          <option value="7">7mo Semestre</option>
+          <option value="8">8vo Semestre</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="filter-grupo">
+          <i class="fas fa-users"></i> Grupo
+        </label>
+        <select id="filter-grupo">
+          <option value="">👥 Todos los grupos</option>
+          <option value="A">Grupo A</option>
+          <option value="B">Grupo B</option>
+          <option value="C">Grupo C</option>
+          <option value="D">Grupo D</option>
+          <option value="E">Grupo E</option>
+          <option value="F">Grupo F</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="filter-generacion">
+          <i class="fas fa-clock"></i> Generación
+        </label>
+        <input type="text" id="filter-generacion" placeholder="Ej: 2023, 2024">
+      </div>
+      
+      <div class="filter-group">
+        <label for="filter-sexo">
+          <i class="fas fa-user"></i> Sexo
+        </label>
+        <select id="filter-sexo">
+          <option value="">👤 Todos</option>
+          <option value="Masculino">👨 Masculino</option>
+          <option value="Femenino">👩 Femenino</option>
+          <option value="Otro">⚧ Otro</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="filter-status">
+          <i class="fas fa-tasks"></i> Estado de Documentos
+        </label>
+        <select id="filter-status">
+          <option value="">📋 Todos los estados</option>
+          <option value="locked">🔒 Bloqueado (Sin completar prácticas)</option>
+          <option value="0">🔴 Sin documentos (0/6)</option>
+          <option value="partial">🟡 En progreso (1-5/6)</option>
+          <option value="6">🟢 Completo (6/6)</option>
+        </select>
+      </div>
+      
+      <div class="filter-actions">
+        <button class="apply-filters" onclick="applyFilters()">
+          <i class="fas fa-search"></i> Aplicar Filtros
+        </button>
+        <button class="clear-filters" onclick="clearFilters()">
+          <i class="fas fa-eraser"></i> Limpiar Filtros
+        </button>
+      </div>
+
+      <div class="filter-summary" id="filter-summary" style="display: none;">
+        <h4><i class="fas fa-info-circle"></i> Resumen de Filtros</h4>
+        <div id="active-filters"></div>
+        <div id="results-count"></div>
+      </div>
+    </div>
+    
+    <div class="content">
+      <h1>Servicio Social - Jefe de Carrera</h1>
+      
+      <div class="search-container">
+        <input type="text" id="search-input" class="search-input" placeholder="Buscar por nombre o matrícula..." />
+        <button class="search-button" id="search-button">Buscar</button>
+      </div>
+      
+      <!-- Contador prominente de estudiantes -->
+      <div class="student-counter" id="student-counter" style="display: none;">
+        <div class="counter-content">
+          <i class="fas fa-users"></i>
+          <span class="counter-text" id="counter-text">Mostrando todos los estudiantes</span>
+          <span class="counter-number" id="counter-number">0</span>
+        </div>
+      </div>
+
+      <div class="student-list-container">
+        <div id="alumnos-cards" class="student-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../JS/firebase-config.js"></script>
+  <script src="../JS/animations.js"></script>
+  <script src="../JS/responsive-menu.js"></script>
+  <script src="../JS/responsive-filters.js"></script>
+  <script src="../JS/filters-handler.js"></script>
+  <script src="../JS/auth.js"></script>
+  <script src="../JS/servicio_social_jefe_carrera.js"></script>
+  <script src="../JS/blockRightClick.js"></script>
+  <script>
+    // Initialize Firebase
+    try {
+      var firebaseConfig = {
+        apiKey: "AIzaSyDgpiwLo8E9Y7ctZu-PqEh8uaL6hEZXdLU",
+        authDomain: "rassp-703df.firebaseapp.com",
+        projectId: "rassp-703df",
+        storageBucket: "rassp-703df.appspot.com",
+        messagingSenderId: "951228921480",
+        appId: "1:951228921480:web:a3a85933eb132b1748c951"
+      };
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+      }
+    } catch (error) {
+      console.error("Firebase initialization error:", error);
+    }
+
+    // Firebase auth state check
+    firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = 'login_jefe.html';
+      } else {
+        document.body.classList.add('logged-in');
+        // Set user name in profile
+        document.getElementById('jefe-name').textContent = user.email.split('@')[0];
+        loadAlumnos();
+      }
+    });
+
+    function toggleLanguage() {
+      console.log('Toggle language clicked');
+    }
+
+    function scrollToFooter() {
+      document.getElementById('footer').scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

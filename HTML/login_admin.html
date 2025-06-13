@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Inicia sesión como Administrador en RASSPP">
+  <title>RASSPP - Iniciar Sesión como Administrador</title>
+  <link rel="stylesheet" href="../CSS/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">RASSPP</div>
+    <div class="nav">
+      <a href="../index.html" data-translate="login">Iniciar Sesión</a>
+    </div>
+    <button class="menu-toggle" aria-label="Abrir menú de navegación">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <section class="login-section">
+    <div class="background-overlay"></div>
+
+    <div class="login-box">
+      <h1 data-translate="admin_login">Iniciar Sesión como Administrador</h1>
+      <div class="email-container">
+        <input type="text" id="admin-email-username" placeholder="Matrícula" data-translate-placeholder="matricula">
+        <span>@ulsaneza.edu.mx</span>
+      </div>
+      <input type="password" id="admin-password" placeholder="Contraseña" data-translate-placeholder="password">
+      <button onclick="adminLogin()" data-translate="login">Iniciar Sesión</button>
+      <button class="back-button" onclick="history.back()" data-translate="back">Regresar</button>
+      <div id="admin-message" class="message"></div>
+    </div>
+
+  </section>
+
+
+  <script src="../JS/firebase-config.js"></script>
+  <script src="../JS/auth.js"></script>
+  <script src="../JS/animations.js"></script>
+  <script src="../JS/responsive-menu.js"></script>
+  <script src="../JS/blockRightClick.js"></script>
+</body>
+</html>
