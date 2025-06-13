@@ -26,22 +26,19 @@
   <div class="main-container">
     <div class="section practicas">
      <div class="overlay" style="background: transparent !important;">
-      
         <h1>Prácticas Profesionales</h1>
         <p style="color: black">Gestión de alumnos en prácticas profesionales</p>
         <button onclick="window.location.href='practicas_profesionales.html'" data-translate="enter">Entrar</button>
-  
       </div>
     </div>
-<!-- En el div class="main-container" -->
-<div class="section servicio">
-  <div class="overlay" style="background: transparent !important;">
-
-    <h1>Servicio Social</h1>
-    <p style="color: black">Gestión de alumnos en servicio social</p>
-    <button onclick="window.location.href='servicio_social.html'" data-translate="enter">Entrar</button>
+    <div class="section servicio">
+      <div class="overlay" style="background: transparent !important;">
+        <h1>Servicio Social</h1>
+        <p style="color: black">Gestión de alumnos en servicio social</p>
+        <button onclick="window.location.href='servicio_social.html'" data-translate="enter">Entrar</button>
+      </div>
+    </div>
   </div>
-</div>
 
   <div class="footer" id="footer">
     <p>© 2025, RASSPP</p>
@@ -58,7 +55,6 @@
   <script src="../JS/responsive-menu.js"></script>
   <script src="../JS/blockRightClick.js"></script>
   <script>
-
     // Firebase auth state check
     firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
